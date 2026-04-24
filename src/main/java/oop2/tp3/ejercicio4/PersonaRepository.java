@@ -9,7 +9,7 @@ import java.util.Optional;
 
 public class PersonaRepository {
 
-    private Jdbi jdbi;
+    private final Jdbi jdbi;
 
     public PersonaRepository(Jdbi jdbi) {
         this.jdbi = jdbi;
@@ -52,7 +52,7 @@ public class PersonaRepository {
                 return Optional.empty();
             }
 
-            return Optional.of(new Persona(rs.get(0).get("nombre"), rs.get(0).get("apellido")));
+            return Optional.of(new Persona(rs.getFirst().get("nombre"), rs.getFirst().get("apellido")));
 
         });
     }
