@@ -1,8 +1,8 @@
 package oop2.tp3.ejercicio5;
 
 public abstract class Actuacion {
-    private String nombreEvento;
-    private int numeroEspectadores;
+    private final String nombreEvento;
+    private final int numeroEspectadores;
     public Actuacion(String nombreEvento, int numeroEspectadores){
         this.nombreEvento=nombreEvento;
         this.numeroEspectadores=numeroEspectadores;

@@ -16,6 +16,7 @@ public class Comedia extends Actuacion {
 
     @Override
     public float adicionalCreditos() {
-        return (float)Math.floor(this.getNumeroEspectadores() / 5);
+        float credito = (float) (double) (this.getNumeroEspectadores() / 5);
+        return credito;
     }
 }
