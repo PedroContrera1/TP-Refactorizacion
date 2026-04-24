@@ -3,49 +3,90 @@ package oop2.tp3.ejercicio3;
 import java.time.LocalDate;
 import java.util.List;
 
-enum TipoDeGasto {
-    CENA, DESAYUNO, ALQUILER_AUTO
-}
-
-class Gasto {
-    TipoDeGasto tipoGasto;
-    int monto;
-}
-
 public class ReporteDeGastos {
-    public void imprimir(List<Gasto> gastos) {
-        int total = 0;
-        int gastosDeComida = 0;
+    private final LocalDate fecha;
 
-        System.out.println("Expenses " + LocalDate.now());
+    public ReporteDeGastos() {
+        this(LocalDate.now());
+    }
+
+    public ReporteDeGastos(LocalDate fecha) {
+        this.fecha = fecha;
+    }
+
+    public String imprimir(List<Gasto> gastos) {
+        StringBuilder reporte = new StringBuilder();
+
+        reporte.append("Expenses ")
+                .append(fecha)
+                .append(System.lineSeparator());
 
         for (Gasto gasto : gastos) {
-            if (gasto.tipoGasto == TipoDeGasto.CENA || gasto.tipoGasto == TipoDeGasto.DESAYUNO) {
+            reporte.append(lineaDelGasto(gasto));
+        }
+
+        reporte.append("Gastos de comida: ")
+                .append(calcularGastosDeComida(gastos))
+                .append(System.lineSeparator());
+
+        reporte.append("Total de gastos: ")
+                .append(calcularTotal(gastos))
+                .append(System.lineSeparator());
+
+        return reporte.toString();
+    }
+
+    private String lineaDelGasto(Gasto gasto) {
+        return nombreGasto(gasto) + "\t" + gasto.monto + "\t" + marcaExcesoComidas(gasto) + System.lineSeparator();
+    }
+
+    private int calcularGastosDeComida(List<Gasto> gastos) {
+        int gastosDeComida = 0;
+
+        for (Gasto gasto : gastos) {
+            if (esGastoDeComida(gasto)) {
                 gastosDeComida += gasto.monto;
             }
+        }
 
-            String nombreGasto = "";
-            switch (gasto.tipoGasto) {
-                case CENA:
-                    nombreGasto = "Cena";
-                    break;
-                case DESAYUNO:
-                    nombreGasto = "Desayuno";
-                    break;
-                case ALQUILER_AUTO:
-                    nombreGasto = "Alquiler de Autos";
-                    break;
-            }
+        return gastosDeComida;
+    }
 
-            String marcaExcesoComidas = gasto.tipoGasto == TipoDeGasto.CENA && gasto.monto > 5000
-                    || gasto.tipoGasto == TipoDeGasto.DESAYUNO && gasto.monto > 1000 ? "X" : " ";
+    private int calcularTotal(List<Gasto> gastos) {
+        int total = 0;
 
-            System.out.println(nombreGasto + "\t" + gasto.monto + "\t" + marcaExcesoComidas);
-
+        for (Gasto gasto : gastos) {
             total += gasto.monto;
         }
 
-        System.out.println("Gastos de comida: " + gastosDeComida);
-        System.out.println("Total de gastos: " + total);
+        return total;
+    }
+
+    private boolean esGastoDeComida(Gasto gasto) {
+        return gasto.tipoGasto == TipoDeGasto.CENA || gasto.tipoGasto == TipoDeGasto.DESAYUNO;
+    }
+
+    private String nombreGasto(Gasto gasto) {
+        return switch (gasto.tipoGasto) {
+            case CENA -> "Cena";
+            case DESAYUNO -> "Desayuno";
+            case ALQUILER_AUTO -> "Alquiler de Autos";
+        };
+    }
+
+    private String marcaExcesoComidas(Gasto gasto) {
+        if (esCenaConExceso(gasto) || esDesayunoConExceso(gasto)) {
+            return "X";
+        }
+
+        return " ";
+    }
+
+    private boolean esCenaConExceso(Gasto gasto) {
+        return gasto.tipoGasto == TipoDeGasto.CENA && gasto.monto > 5000;
+    }
+
+    private boolean esDesayunoConExceso(Gasto gasto) {
+        return gasto.tipoGasto == TipoDeGasto.DESAYUNO && gasto.monto > 1000;
     }
 }
