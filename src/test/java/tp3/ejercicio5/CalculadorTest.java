@@ -1,9 +1,6 @@
 package tp3.ejercicio5;
 
-import oop2.tp3.ejercicio5.Actuacion;
-import oop2.tp3.ejercicio5.Calculador;
-import oop2.tp3.ejercicio5.Evento;
-import oop2.tp3.ejercicio5.Factura;
+import oop2.tp3.ejercicio5.*;
 import org.junit.jupiter.api.Test;
 
 import java.util.List;
@@ -14,7 +11,7 @@ public class CalculadorTest {
 
     @Test
     public void test01() {
-        var eventos = cargarEventos();
+
         var factura = crearFactura();
 
         assertEquals("""
@@ -24,21 +21,12 @@ public class CalculadorTest {
                 El Perfume: 40000.0. Asientos: 8
                 Monto ganado: 309400.0
                 Créditos ganados: 232.0
-                """, new Calculador().reporte(factura, eventos));
-    }
-
-    private List<Evento> cargarEventos() {
-        return List.of(new Evento("Escuela de Rock", "Comedia"),
-                new Evento("Hamlet", "Drama"),
-                new Evento("El Avion", "Dram"),
-                new Evento("Cantando en la playa", "Comedia"),
-                new Evento("El Perfume", "Drama")
-        );
+                """, new Calculador().reporte(factura));
     }
 
     private Factura crearFactura() {
-        return new Factura("c1", List.of(new Actuacion("Escuela de Rock", 158),
-                new Actuacion("Hamlet", 103),
-                new Actuacion("El Perfume", 8)));
+        return new Factura("c1", List.of(new Comedia("Escuela de Rock", 158),
+                new Drama("Hamlet", 103),
+                new Drama("El Perfume", 8)));
     }
 }

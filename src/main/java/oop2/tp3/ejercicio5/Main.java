@@ -4,11 +4,11 @@ import java.util.List;
 
 public class Main {
 
-    public static void main(String[] args) {
+    public void main(String[] args) {
         var eventos = cargarEventos();
         var factura = crearFactura();
 
-        System.out.println(new Calculador().reporte(factura, eventos));
+        System.out.println(new Calculador().reporte(factura));
     }
 
     private static List<Evento> cargarEventos() {
@@ -20,9 +20,9 @@ public class Main {
         );
     }
 
-    private static Factura crearFactura() {
-        return new Factura("c1", List.of(new Actuacion("Escuela de Rock", 158),
-                new Actuacion("Hamlet", 103),
-                new Actuacion("El Perfume", 8)));
+    private  Factura crearFactura() {
+        return new Factura("c1", List.of(new Comedia("Escuela de Rock", 158),
+                new Drama("Hamlet", 103),
+                new Drama("El Perfume", 8)));
     }
 }
