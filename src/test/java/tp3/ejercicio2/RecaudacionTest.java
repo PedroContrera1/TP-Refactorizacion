@@ -15,70 +15,71 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 public class RecaudacionTest {
 
     @Test
-    public void testWhereGivenCompany() throws IOException {
-        Map<String, String> options = new HashMap<String, String>();
+    public void testFiltraPorNombreDeEmpresa() throws IOException {
+        Map<String, String> options = new HashMap<>();
         options.put("company_name", "Facebook");
         var r1=new Recaudacion(new LectorCSV("src/main/resources/data.csv"));
-        assertEquals(r1.where(options).size(), 7);
+        assertEquals(7, r1.where(options).size());
     }
 
     @Test
-    public void testWhereGivenCity() throws IOException {
-        Map<String, String> options = new HashMap<String, String>();
+    public void testFiltraPorCiudad() throws IOException {
+        Map<String, String> options = new HashMap<>();
         options.put("city", "Tempe");
         var r1=new Recaudacion(new LectorCSV("src/main/resources/data.csv"));
-        assertEquals(r1.where(options).size(), 3);
+        assertEquals(3, r1.where(options).size());
     }
 
     @Test
-    public void testWhereGivenState() throws IOException {
-        Map<String, String> options = new HashMap<String, String>();
+    public void testFiltraPorEstado() throws IOException {
+        Map<String, String> options = new HashMap<>();
         options.put("state", "CA");
         var r1=new Recaudacion(new LectorCSV("src/main/resources/data.csv"));
-        assertEquals(r1.where(options).size(), 873);
+        assertEquals(873, r1.where(options).size());
     }
 
     @Test
-    public void testWhereGivenRound() throws IOException {
-        Map<String, String> options = new HashMap<String, String>();
+    public void testFiltraPorRonda() throws IOException {
+        Map<String, String> options = new HashMap<>();
         options.put("round", "a");
         var r1=new Recaudacion(new LectorCSV("src/main/resources/data.csv"));
-        assertEquals(r1.where(options).size(), 582);
+        assertEquals(582, r1.where(options).size());
     }
 
     @Test
-    public void testMultipleOptions() throws IOException {
-        Map<String, String> options = new HashMap<String, String>();
+    public void testFiltraPorMultiplesOpciones() throws IOException {
+        Map<String, String> options = new HashMap<>();
         options.put("round", "a");
         options.put("company_name", "Facebook");
         var r1=new Recaudacion(new LectorCSV("src/main/resources/data.csv"));
-        assertEquals(r1.where(options).size(), 1);
+        assertEquals(1, r1.where(options).size());
     }
 
     @Test
-    public void testWhereNotExists() throws IOException {
-        Map<String, String> options = new HashMap<String, String>();
+    public void testDevuelveListaVaciaCuandoNoExiste() throws IOException {
+        Map<String, String> options = new HashMap<>();
         options.put("company_name", "NotFacebook");
         var r1=new Recaudacion(new LectorCSV("src/main/resources/data.csv"));
-        assertEquals(r1.where(options).size(), 0);
+        assertEquals(0, r1.where(options).size());
     }
 
     @Test
-    public void testWhereCorrectKeys() throws IOException {
-        Map<String, String> options = new HashMap<String, String>();
+    public void testDevuelveLasClavesCorrectas() throws IOException {
+        Map<String, String> options = new HashMap<>();
         options.put("company_name", "Facebook");
         var r1=new Recaudacion(new LectorCSV("src/main/resources/data.csv"));
-        Map<String, String> row = r1.where(options).get(0);
+        Map<String, String> row = r1.where(options).getFirst();
 
-        assertEquals(row.get("permalink"), "facebook");
-        assertEquals(row.get("company_name"), "Facebook");
-        assertEquals(row.get("number_employees"), "450");
-        assertEquals(row.get("category"), "web");
-        assertEquals(row.get("city"), "Palo Alto");
-        assertEquals(row.get("state"), "CA");
-        assertEquals(row.get("funded_date"), "1-Sep-04");
-        assertEquals(row.get("raised_amount"), "500000");
-        assertEquals(row.get("round"), "angel");
+        assertEquals("facebook", row.get("permalink"));
+        assertEquals("Facebook", row.get("company_name"));
+        assertEquals("450", row.get("number_employees"));
+        assertEquals("web", row.get("category"));
+        assertEquals("Palo Alto", row.get("city"));
+        assertEquals("CA", row.get("state"));
+        assertEquals("1-Sep-04", row.get("funded_date"));
+        assertEquals("500000", row.get("raised_amount"));
+        assertEquals("angel", row.get("round"));
 
     }
 }
+
