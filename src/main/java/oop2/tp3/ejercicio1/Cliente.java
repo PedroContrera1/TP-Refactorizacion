@@ -25,12 +25,14 @@ public class Cliente {
         resultado[1] = puntosAlquilerFrecuente;
         return resultado;
     }
-    public int calcularPuntos(Alquiler alquiler){
-        int puntosAlquilerFrecuente=0;
+    public int calcularPuntos(Alquiler alquiler) {
+        int puntosAlquilerFrecuente = 1;
+
         if ((alquiler.copia().libro().codigoPrecio() == Libro.NUEVO_LANZAMIENTO)
                 && alquiler.diasAlquilados() > 1) {
             puntosAlquilerFrecuente++;
         }
+
         return puntosAlquilerFrecuente;
     }
     public double calcularMonto (Alquiler alquiler){
