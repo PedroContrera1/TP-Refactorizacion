@@ -2,7 +2,7 @@ package oop2.tp3.ejercicio3;
 
 import java.util.List;
 
-public class EjemploDeUsoDelReporte {
+public class Main {
     public static void main(String[] args) {
         var g1 = new Gasto();
         g1.tipoGasto = TipoDeGasto.DESAYUNO;
